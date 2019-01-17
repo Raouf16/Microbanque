@@ -7,8 +7,10 @@ import fr.dauphine.miageif.msa.Microbanque.entity.Operation;
 import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -41,6 +43,13 @@ public class OperationController {
     public Operation findOperationByType(@PathVariable OperationType type)
     {
         Operation operation = repository.findByType(type);
+        return operation;
+    }
+
+    @GetMapping("/operation/date/{date}")
+    public Operation findOperationByType(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
+    {
+        Operation operation = repository.findByDate(date);
         return operation;
     }
 
