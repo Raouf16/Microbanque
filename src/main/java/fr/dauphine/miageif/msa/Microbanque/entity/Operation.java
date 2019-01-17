@@ -1,9 +1,11 @@
 package fr.dauphine.miageif.msa.Microbanque.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +14,10 @@ import java.util.Date;
 public class Operation implements Serializable {
     @Id
     private int id;
-    private String type;
+
+    @Enumerated(EnumType.STRING)
+    private OperationType type;
+
     private String iban_source;
     private String iban_destination;
     private double montant;
@@ -22,7 +27,7 @@ public class Operation implements Serializable {
 
     public Operation(){}
 
-    public Operation(int id, String type, String iban_source, String iban_destination, double montant, Date date) {
+    public Operation(int id, OperationType type, String iban_source, String iban_destination, double montant, Date date) {
         this.id = id;
         this.type = type;
         this.iban_source = iban_source;
@@ -31,7 +36,7 @@ public class Operation implements Serializable {
         this.date = date;
     }
 
-    public Operation(int id, String type, String iban_source, double montant, Date date) {
+    public Operation(int id, OperationType type, String iban_source, double montant, Date date) {
         this.id = id;
         this.type = type;
         this.iban_source = iban_source;
@@ -47,11 +52,11 @@ public class Operation implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
+    public OperationType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(OperationType type) {
         this.type = type;
     }
 

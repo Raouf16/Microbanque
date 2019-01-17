@@ -4,6 +4,7 @@ import fr.dauphine.miageif.msa.Microbanque.entity.Account;
 import fr.dauphine.miageif.msa.Microbanque.jparepository.AccountRepository;
 import fr.dauphine.miageif.msa.Microbanque.jparepository.OperationRepository;
 import fr.dauphine.miageif.msa.Microbanque.entity.Operation;
+import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,16 @@ public class OperationController {
     }
 
     @GetMapping("/operation/{id}")
-    public Operation findOperation(@PathVariable int id)
+    public Operation findOperationByID(@PathVariable int id)
     {
         Operation operation = repository.findById(id);
+        return operation;
+    }
+
+    @GetMapping("/operation/type/{type}")
+    public Operation findOperationByType(@PathVariable OperationType type)
+    {
+        Operation operation = repository.findByType(type);
         return operation;
     }
 
