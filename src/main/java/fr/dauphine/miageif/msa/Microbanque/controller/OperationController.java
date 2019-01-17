@@ -39,19 +39,18 @@ public class OperationController {
     @PostMapping("/operation/add")
     public String addOperation(@ModelAttribute("form") Operation operation) {
         List<Account> accounts = accountRepository.findAll();
-        Account compte_source = null;
-        Account compte_dest = null;
+        Account compte_source = new Account();
+        Account compte_dest = new Account();
 
         if(operation.getMontant() <= 0){
             return "Impossible d'effectuer une opération d'un montant nul ou négatif";
         }
 
-
         for(int i = 0; i < accounts.size(); i++){
-            if(accounts.get(i).getIban() == operation.getIban_source()){
+            if(String.valueOf(accounts.get(i).getIban()) == String.valueOf(operation.getIban_source())){
                 compte_source = accounts.get(i);
             }
-            else if(accounts.get(i).getIban() == operation.getIban_destination()){
+            else if(String.valueOf(accounts.get(i).getIban()) == String.valueOf(operation.getIban_destination())){
                 compte_dest = accounts.get(i);
             }
         }
