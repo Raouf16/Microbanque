@@ -1,5 +1,6 @@
 package fr.dauphine.miageif.msa.Microbanque.controller;
 
+import com.sun.jndi.toolkit.url.Uri;
 import fr.dauphine.miageif.msa.Microbanque.entity.Account;
 import fr.dauphine.miageif.msa.Microbanque.jparepository.AccountRepository;
 import fr.dauphine.miageif.msa.Microbanque.jparepository.OperationRepository;
@@ -8,8 +9,13 @@ import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +28,6 @@ public class OperationController {
     @Autowired
     private OperationRepository repository;
 
-    @Autowired
-    private AccountRepository accountRepository;
 
     @GetMapping("/operation/all")
     public List<Operation> findAllOperatios()
@@ -40,14 +44,14 @@ public class OperationController {
     }
 
     @GetMapping("/operation/type/{type}")
-    public Operation findOperationByType(@PathVariable OperationType type)
+    public Operation findOperationByType(@PathVariable String type)
     {
         Operation operation = repository.findByType(type);
         return operation;
     }
 
     @GetMapping("/operation/date/{date}")
-    public Operation findOperationByType(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
+    public Operation findOperationByDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
     {
         Operation operation = repository.findByDate(date);
         return operation;
@@ -55,32 +59,41 @@ public class OperationController {
 
     @PostMapping("/operation/add")
     public String addOperation(@ModelAttribute("form") Operation operation) {
-        List<Account> accounts = accountRepository.findAll();
-        Account compte_source = new Account();
-        Account compte_dest = new Account();
+
+        List ibans;
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List> responseEntity = restTemplate.getForEntity("http://localhost:8012/account/iban",List.class);
+
+        ibans = responseEntity.getBody();
+
+        String compte_source = "";
+        String compte_dest = "";
+
 
         if(operation.getMontant() <= 0){
             return "Impossible d'effectuer une opération d'un montant nul ou négatif";
         }
 
-        for(int i = 0; i < accounts.size(); i++){
-            if(String.valueOf(accounts.get(i).getIban()) == String.valueOf(operation.getIban_source())){
-                compte_source = accounts.get(i);
+        for(int i = 0; i < ibans.size(); i++){
+            if(String.valueOf(ibans.get(i)).equals(String.valueOf(operation.getIban_source()))){
+                compte_source = String.valueOf(ibans.get(i));
             }
-            else if(String.valueOf(accounts.get(i).getIban()) == String.valueOf(operation.getIban_destination())){
-                compte_dest = accounts.get(i);
+            else if(String.valueOf(ibans.get(i)).equals(String.valueOf(operation.getIban_destination()))){
+                compte_dest = String.valueOf(ibans.get(i));
             }
         }
 
-        if(compte_source == null){
+        if(compte_source == ""){
             return "Iban source non existant";
         }
-        else if(compte_dest == null){
+        else if(compte_dest == ""){
             return "Iban destination non existant";
         }
 
         repository.save(operation);
         return "Opération effectuée avec succès";
+
     }
 
     @DeleteMapping("/operation/{id}")

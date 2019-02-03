@@ -11,6 +11,6 @@ public interface OperationRepository extends JpaRepository<Operation,Long> {
 
     List<Operation> findAll();
     Operation findById(int id);
-    Operation findByType(OperationType type);
+    Operation findByType(String type);
     Operation findByDate(Date date);
 }

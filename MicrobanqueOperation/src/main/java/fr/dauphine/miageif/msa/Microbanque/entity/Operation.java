@@ -15,8 +15,7 @@ public class Operation implements Serializable {
     @Id
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    private OperationType type;
+    private String type;
 
     private String iban_source;
     private String iban_destination;
@@ -27,7 +26,7 @@ public class Operation implements Serializable {
 
     public Operation(){}
 
-    public Operation(int id, OperationType type, String iban_source, String iban_destination, double montant, Date date) {
+    public Operation(int id, String type, String iban_source, String iban_destination, double montant, Date date) {
         this.id = id;
         this.type = type;
         this.iban_source = iban_source;
@@ -36,7 +35,7 @@ public class Operation implements Serializable {
         this.date = date;
     }
 
-    public Operation(int id, OperationType type, String iban_source, double montant, Date date) {
+    public Operation(int id, String type, String iban_source, double montant, Date date) {
         this.id = id;
         this.type = type;
         this.iban_source = iban_source;
@@ -52,11 +51,11 @@ public class Operation implements Serializable {
         this.id = id;
     }
 
-    public OperationType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(OperationType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
