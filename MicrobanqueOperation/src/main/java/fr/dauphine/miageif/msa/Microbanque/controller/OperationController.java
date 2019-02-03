@@ -1,21 +1,16 @@
 package fr.dauphine.miageif.msa.Microbanque.controller;
 
-import com.sun.jndi.toolkit.url.Uri;
-import fr.dauphine.miageif.msa.Microbanque.entity.Account;
-import fr.dauphine.miageif.msa.Microbanque.jparepository.AccountRepository;
+
 import fr.dauphine.miageif.msa.Microbanque.jparepository.OperationRepository;
 import fr.dauphine.miageif.msa.Microbanque.entity.Operation;
-import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -96,8 +91,9 @@ public class OperationController {
 
     }
 
+    @Transactional
     @DeleteMapping("/operation/{id}")
-    void deleteOperation(@PathVariable Long id) {
+    void deleteOperation(@PathVariable int id) {
         repository.deleteById(id);
     }
 }

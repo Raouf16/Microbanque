@@ -1,11 +1,8 @@
 package fr.dauphine.miageif.msa.Microbanque.entity;
 
-import fr.dauphine.miageif.msa.Microbanque.utils.OperationType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
