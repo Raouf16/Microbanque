@@ -15,8 +15,6 @@ public class Customer implements Serializable {
     private String lastname;
     private String phone;
     private String email;
-    @OneToMany(targetEntity=Account.class, mappedBy="customer", fetch=FetchType.EAGER)
-    private List<Account> accounts;
 
     public Customer(){}
 
@@ -26,11 +24,6 @@ public class Customer implements Serializable {
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
-    }
-
-    public void addAccount(Account account)
-    {
-        this.accounts.add(account);
     }
 
     public int getId() {
@@ -73,11 +66,4 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
 }

@@ -4,14 +4,14 @@ import fr.dauphine.miageif.msa.Microbanque.jparepository.AccountRepository;
 import fr.dauphine.miageif.msa.Microbanque.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+@Controller
 public class AccountController {
 
     @Autowired
@@ -19,6 +19,24 @@ public class AccountController {
 
     @Autowired
     private AccountRepository repository;
+
+    @GetMapping("/")
+    public String index(Model model) {
+
+        String message = "Hello Spring Boot + JSP";
+
+        model.addAttribute("name", message);
+
+        return "index";
+    }
+    @GetMapping("/view")
+    public String viewAccountList(Model model) {
+
+        List<Account> accounts = repository.findAll();
+        model.addAttribute("accounts", accounts);
+
+        return "accountList";
+    }
 
     @GetMapping("/account/all")
     public List<Account> findAllAccounts()

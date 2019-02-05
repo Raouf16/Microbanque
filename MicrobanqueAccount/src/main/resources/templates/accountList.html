@@ -1,0 +1,33 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Person List</title>
+  </head>
+  <body>
+    <h1>Account List</h1>
+
+    <br/><br/>
+    <div>
+      <table border="1">
+        <tr>
+          <th>Account ID</th>
+          <th>Iban</th>
+          <th>Type</th>
+          <th>Interets</th>
+          <th>Frais tenu compte</th>
+        </tr>
+		
+        <tr th:each="account : ${accounts}">
+          <td th:text="${account.getId()}"></td>
+          <td th:text="${account.getIban()}"></td>
+          <td th:text="${account.getType()}"></td>
+          <td th:text="${account.getInteret()}"></td>
+          <td th:text="${account.getFrais_tenu_compte()}"></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+
+</html>

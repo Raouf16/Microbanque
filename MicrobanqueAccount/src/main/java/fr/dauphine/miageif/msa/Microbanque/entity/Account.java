@@ -13,8 +13,6 @@ public class Account implements Serializable {
     private float interet;
     private String frais_tenu_compte;
 
-    private Customer customer;
-
     public Account(){}
 
     public Account(int id, String iban, String type, float interet, String frais_tenu_compte) {
@@ -64,4 +62,5 @@ public class Account implements Serializable {
     public void setFrais_tenu_compte(String frais_tenu_compte) {
         this.frais_tenu_compte = frais_tenu_compte;
     }
+
 }
