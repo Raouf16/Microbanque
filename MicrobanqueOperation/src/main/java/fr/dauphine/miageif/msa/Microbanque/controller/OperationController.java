@@ -1,20 +1,21 @@
 package fr.dauphine.miageif.msa.Microbanque.controller;
 
-
 import fr.dauphine.miageif.msa.Microbanque.jparepository.OperationRepository;
 import fr.dauphine.miageif.msa.Microbanque.entity.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
 
-@RestController
+@Controller
 public class OperationController {
 
     @Autowired
@@ -24,6 +25,48 @@ public class OperationController {
     private OperationRepository repository;
 
 
+    @GetMapping("/")
+    public String index(Model model) {
+
+        return "index";
+    }
+    @GetMapping("/view")
+    public String viewOperationList(Model model) {
+
+        List<Operation> operations = repository.findAll();
+        model.addAttribute("operations", operations);
+
+        return "operationList";
+    }
+
+    @GetMapping("/view/id")
+    public String viewOperation(@ModelAttribute("form") Operation operationGet, Model model) {
+
+        Operation operation = repository.findById(operationGet.getId());
+        model.addAttribute("operation", operation);
+
+        return "operationView";
+    }
+
+    @GetMapping("/view/type")
+    public String viewOperationType(@ModelAttribute("form") Operation operationGet, Model model) {
+
+        Operation operation = repository.findByType(operationGet.getType());
+        model.addAttribute("operation", operation);
+
+        return "operationView";
+    }
+
+    @GetMapping("/view/date")
+    public String viewOperationDate(@ModelAttribute("form") Operation operationGet, Model model) {
+
+        Operation operation = repository.findByDate(operationGet.getDate());
+        model.addAttribute("operation", operation);
+
+        return "operationView";
+    }
+
+    @ResponseBody
     @GetMapping("/operation/all")
     public List<Operation> findAllOperatios()
     {
@@ -31,6 +74,7 @@ public class OperationController {
         return operations;
     }
 
+    @ResponseBody
     @GetMapping("/operation/{id}")
     public Operation findOperationByID(@PathVariable int id)
     {
@@ -38,6 +82,7 @@ public class OperationController {
         return operation;
     }
 
+    @ResponseBody
     @GetMapping("/operation/type/{type}")
     public Operation findOperationByType(@PathVariable String type)
     {
@@ -45,6 +90,7 @@ public class OperationController {
         return operation;
     }
 
+    @ResponseBody
     @GetMapping("/operation/date/{date}")
     public Operation findOperationByDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
     {
@@ -52,6 +98,7 @@ public class OperationController {
         return operation;
     }
 
+    @ResponseBody
     @PostMapping("/operation/add")
     public String addOperation(@ModelAttribute("form") Operation operation) {
 
@@ -91,6 +138,7 @@ public class OperationController {
 
     }
 
+    @ResponseBody
     @Transactional
     @DeleteMapping("/operation/{id}")
     void deleteOperation(@PathVariable int id) {

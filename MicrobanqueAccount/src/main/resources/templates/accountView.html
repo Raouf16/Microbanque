@@ -25,10 +25,10 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li><a href="#top" id="top-link"><span class="icon fa-home">Home</span></a></li>
-								<li><a href="#portfolio" id="about-link"><span class="icon fa-user">Create account</span></a></li>
-								<li><a href="#about" id="about-link"><span class="icon fa-user">List account by ID</span></a></li>
-								<li><a href="#contact" id="about-link"><span class="icon fa-user">Update an account</span></a></li>
+								<li><a href="http://localhost:8012/" id="top-link"><span class="icon fa-home">Home</span></a></li>
+								<li><a href="http://localhost:8012/#portfolio" id="about-link"><span class="icon fa-user">Create account</span></a></li>
+								<li><a href="http://localhost:8012/#about" id="about-link"><span class="icon fa-user">List account by ID</span></a></li>
+								<li><a href="http://localhost:8012/#contact" id="about-link"><span class="icon fa-user">Update an account</span></a></li>
 							</ul>
 						</nav>
 
@@ -56,15 +56,28 @@
 					<section id="top" class="one dark cover">
 						<div class="container">
 
-							<header>
-								<h2 class="alt">Hi! I'm <strong>Microbanque</strong>, an <a href="https://github.com/Raouf16/Microbanque/">OpenSource</a> microservice banking application<br />
-								designed by <a href="https://www.linkedin.com/in/raouf-haddad-7993a1aa/">Raouf HADDAD</a>.</h2>
-								<p>There is plenty of things to see, see the left menu!</p>
-							</header>
-
-							<footer>
-								<a href="http://localhost:8012/view" class="button scrolly">Start by listing all the accounts</a>
-							</footer>
+							<div>
+								  <table border="1">
+									<tr>
+									  <th>Account ID</th>
+									  <th>Iban</th>
+									  <th>Type</th>
+									  <th>Interets</th>
+									  <th>Frais tenu compte</th>
+									</tr>
+									
+									<tr>
+									  <td th:text="${account.getId()}"></td>
+									  <td th:text="${account.getIban()}"></td>
+									  <td th:text="${account.getType()}"></td>
+									  <td th:text="${account.getInteret()}"></td>
+									  <td th:text="${account.getFrais_tenu_compte()}"></td>
+									</tr>
+								  </table>
+							</div>
+							
+							
+							
 
 						</div>
 					</section>
@@ -79,7 +92,7 @@
 
 							<p>Please fill all the informations.</p>
 
-							<form method="POST" action="http://localhost:8012/account/add">
+							<form method="GET" action="http://localhost:8012/account/add">
 								<div class="row">
 									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
 									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
@@ -125,7 +138,7 @@
 
 							<p>Please fill all the informations.</p>
 
-							<form method="POST" action="http://localhost:8012/update">
+							<form method="GET" action="http://localhost:8012/update">
 								<div class="row">
 									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
 									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
@@ -161,7 +174,6 @@
 			<script type="text/javascript" th:src="@{/js/breakpoints.min.js}"></script>
 			<script type="text/javascript" th:src="@{/js/util.js}"></script>
 			<script type="text/javascript" th:src="@{/js/main.js}"></script>
-			
 
 	</body>
 </html>

@@ -23,10 +23,6 @@ public class AccountController {
     @GetMapping("/")
     public String index(Model model) {
 
-        String message = "Hello Spring Boot + JSP";
-
-        model.addAttribute("name", message);
-
         return "index";
     }
     @GetMapping("/view")
@@ -38,7 +34,17 @@ public class AccountController {
         return "accountList";
     }
 
+    @GetMapping("/view/id")
+    public String viewAccount(@ModelAttribute("form") Account accountGet, Model model) {
+
+        Account account = repository.findById(accountGet.getId());
+        model.addAttribute("account", account);
+
+        return "accountView";
+    }
+
     @GetMapping("/account/all")
+    @ResponseBody
     public List<Account> findAllAccounts()
     {
         List<Account> accounts = repository.findAll();
@@ -46,6 +52,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/{id}")
+    @ResponseBody
     public Account findAccount(@PathVariable int id)
     {
         Account account = repository.findById(id);
@@ -53,6 +60,7 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
+    @ResponseBody
     public String updateAccount(@ModelAttribute("form") Account account) {
 
         if(repository.findById(account.getId()) == null){
@@ -65,6 +73,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/iban")
+    @ResponseBody
     public List<String> findAllIban()
     {
         List<Account> accounts = repository.findAll();
@@ -78,10 +87,13 @@ public class AccountController {
     }
 
     @PostMapping("/account/add")
-    public void addAccount(@ModelAttribute("form") Account account) {
+    public String addAccount(@ModelAttribute("form") Account account, Model model) {
         repository.save(account);
+
+        return "index";
     }
 
+    @ResponseBody
     @DeleteMapping("/account/{id}")
     void deleteAccount(@PathVariable int id) {
         repository.deleteById(id);

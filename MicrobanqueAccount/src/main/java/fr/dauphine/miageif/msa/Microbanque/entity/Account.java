@@ -15,6 +15,10 @@ public class Account implements Serializable {
 
     public Account(){}
 
+    public Account(int id) {
+        this.id = id;
+    }
+
     public Account(int id, String iban, String type, float interet, String frais_tenu_compte) {
         this.id = id;
         this.iban = iban;
@@ -22,6 +26,7 @@ public class Account implements Serializable {
         this.interet = interet;
         this.frais_tenu_compte = frais_tenu_compte;
     }
+
 
     public int getId() {
         return id;

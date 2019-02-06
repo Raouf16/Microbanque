@@ -18,17 +18,17 @@
 					<!-- Logo -->
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">Service : Account</h1>
+							<h1 id="title">Service : Operation</h1>
 							<p>Home page</p>
 						</div>
 
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li><a href="http://localhost:8012/" id="top-link"><span class="icon fa-home">Home</span></a></li>
-								<li><a href="http://localhost:8012/#portfolio" id="about-link"><span class="icon fa-user">Create account</span></a></li>
-								<li><a href="http://localhost:8012/#about" id="about-link"><span class="icon fa-user">List account by ID</span></a></li>
-								<li><a href="http://localhost:8012/#contact" id="about-link"><span class="icon fa-user">Update an account</span></a></li>
+								<li><a href="http://localhost:8011/" id="top-link"><span class="icon fa-home">Home</span></a></li>
+								<li><a href="http://localhost:8011/#portfolio" id="about-link"><span class="icon fa-user">Add operation</span></a></li>
+								<li><a href="http://localhost:8011/#about" id="about-link"><span class="icon fa-user">List operation by ID</span></a></li>
+								<li><a href="http://localhost:8011/#contact" id="about-link"><span class="icon fa-user">List operation by Type or Date</span></a></li>
 							</ul>
 						</nav>
 
@@ -59,46 +59,46 @@
 							<div>
 								  <table border="1">
 									<tr>
-									  <th>Account ID</th>
-									  <th>Iban</th>
+									  <th>Operation ID</th>
 									  <th>Type</th>
-									  <th>Interets</th>
-									  <th>Frais tenu compte</th>
+									  <th>Iban Source</th>
+									  <th>Iban Destination</th>
+									  <th>Montant</th>
+									  <th>date</th>
 									</tr>
 									
-									<tr th:each="account : ${accounts}">
-									  <td th:text="${account.getId()}"></td>
-									  <td th:text="${account.getIban()}"></td>
-									  <td th:text="${account.getType()}"></td>
-									  <td th:text="${account.getInteret()}"></td>
-									  <td th:text="${account.getFrais_tenu_compte()}"></td>
+									<tr>
+									  <td th:text="${operation.getId()}"></td>
+									  <td th:text="${operation.getType()}"></td>
+									  <td th:text="${operation.getIban_source()}"></td>
+									  <td th:text="${operation.getIban_destination()}"></td>
+									  <td th:text="${operation.getMontant()}"></td>
+									  <td th:text="${operation.getDate()}"></td>
 									</tr>
 								  </table>
 							</div>
-							
-							
-							
 
 						</div>
 					</section>
 
-				<!-- Create new account -->
+				<!-- Add a new operation -->
 					<section id="portfolio" class="two">
 						<div class="container">
 
 							<header>
-								<h2>Add a new account</h2>
+								<h2>Add a new operation</h2>
 							</header>
 
 							<p>Please fill all the informations.</p>
 
-							<form method="GET" action="http://localhost:8012/account/add">
+							<form method="POST" action="http://localhost:8011/operation/add">
 								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="type" placeholder="Type de compte : Courant, Épargne, Action .." /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="interet" placeholder="Intérêts souhaités ?" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="frais_tenu_compte" placeholder="Frais de tenu de compte souhaités" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro d'opération" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="type" placeholder="Type d'opération : Virement, Dépôt, Retrat .." /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="iban_source" placeholder="IBAN du compte source" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="iban_destination" placeholder="IBAN du compte destination" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="montant" placeholder="Montant souhaité" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="date" placeholder="Date du virement au format dd-MM-yyyy" /></div>
 									<div class="col-12">
 										<input type="submit" value="Submit" />
 									</div>
@@ -108,48 +108,54 @@
 						</div>
 					</section>
 
-				<!-- List account by ID -->
+				<!-- List operation by ID -->
 					<section id="about" class="three">
 						<div class="container">
 
 							<header>
-								<h2>List account by ID</h2>
+								<h2>List operation by ID</h2>
 							</header>
 
-							<p>Please fill in the ID.</p>
-							<form method="GET" action="http://localhost:8012/view/id">
+							<p>Please fill in the ID</p>
+							<form method="GET" action="http://localhost:8011/view/id">
 								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte .." /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de l'opération .." /></div>
 									<div class="col-12">
-										<input type="submit" value="Submit" onclick="getInput()"/>
+										<input type="submit" value="Submit" />
 									</div>
 								</div>
 							</form>
 						</div>
 					</section>
 
-				<!-- Update an account -->
+				<!-- Update an operation -->
 					<section id="contact" class="four">
 						<div class="container">
 
 							<header>
-								<h2>Update an existing account</h2>
+								<h2>List operation by Type or Date</h2>
 							</header>
 
-							<p>Please fill all the informations.</p>
-
-							<form method="GET" action="http://localhost:8012/update">
+							<p>Type : Please fill in the operation Type</p>
+							<form method="GET" action="http://localhost:8011/view/type">
 								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="type" placeholder="Type de compte : Courant, Épargne, Action .." /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="interet" placeholder="Intérêts souhaités ?" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="frais_tenu_compte" placeholder="Frais de tenu de compte souhaités" /></div>
+									<div class="col-6 col-12-mobile"><input type="text" name="type" placeholder="Type de l'opération .." /></div>
 									<div class="col-12">
 										<input type="submit" value="Submit" />
 									</div>
 								</div>
 							</form>
+							
+							<p>Date : Please fill in the operation Date dd-MM-yyyy</p>
+							<form method="GET" action="http://localhost:8011/view/date">
+								<div class="row">
+									<div class="col-6 col-12-mobile"><input type="text" name="date" placeholder="Date de l'opération au format dd-mm-yyyy.." /></div>
+									<div class="col-12">
+										<input type="submit" value="Submit" />
+									</div>
+								</div>
+							</form>
+
 
 						</div>
 					</section>
@@ -174,6 +180,7 @@
 			<script type="text/javascript" th:src="@{/js/breakpoints.min.js}"></script>
 			<script type="text/javascript" th:src="@{/js/util.js}"></script>
 			<script type="text/javascript" th:src="@{/js/main.js}"></script>
+			
 
 	</body>
 </html>
