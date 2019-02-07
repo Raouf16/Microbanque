@@ -1,12 +1,10 @@
 package fr.dauphine.miageif.msa.Microbanque.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.List;
 
+// Cette classe n'est pas utilisée, j'allais en faire un 3ème service "Customer" mais contrainte de temps ..
 @Entity
 public class Customer implements Serializable {
     @Id

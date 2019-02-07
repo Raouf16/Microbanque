@@ -51,19 +51,19 @@ public class OperationController {
     @GetMapping("/view/type")
     public String viewOperationType(@ModelAttribute("form") Operation operationGet, Model model) {
 
-        Operation operation = repository.findByType(operationGet.getType());
-        model.addAttribute("operation", operation);
+        List<Operation> operations = repository.findByType(operationGet.getType());
+        model.addAttribute("operations", operations);
 
-        return "operationView";
+        return "operationList";
     }
 
     @GetMapping("/view/date")
     public String viewOperationDate(@ModelAttribute("form") Operation operationGet, Model model) {
 
-        Operation operation = repository.findByDate(operationGet.getDate());
-        model.addAttribute("operation", operation);
+        List<Operation> operations = repository.findByDate(operationGet.getDate());
+        model.addAttribute("operations", operations);
 
-        return "operationView";
+        return "operationList";
     }
 
     @ResponseBody
@@ -84,18 +84,18 @@ public class OperationController {
 
     @ResponseBody
     @GetMapping("/operation/type/{type}")
-    public Operation findOperationByType(@PathVariable String type)
+    public List<Operation>  findOperationByType(@PathVariable String type)
     {
-        Operation operation = repository.findByType(type);
-        return operation;
+        List<Operation> operations = repository.findByType(type);
+        return operations;
     }
 
     @ResponseBody
     @GetMapping("/operation/date/{date}")
-    public Operation findOperationByDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
+    public List<Operation>  findOperationByDate(@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") Date date)
     {
-        Operation operation = repository.findByDate(date);
-        return operation;
+        List<Operation> operations = repository.findByDate(date);
+        return operations;
     }
 
     @ResponseBody
@@ -104,6 +104,7 @@ public class OperationController {
 
         List ibans;
 
+        //On récupère tous les ibans du service account
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List> responseEntity = restTemplate.getForEntity("http://localhost:8012/account/iban",List.class);
 
@@ -112,7 +113,7 @@ public class OperationController {
         String compte_source = "";
         String compte_dest = "";
 
-
+        //On check si les ibans renseignés pour l'opération existent bien
         if(operation.getMontant() <= 0){
             return "Impossible d'effectuer une opération d'un montant nul ou négatif";
         }

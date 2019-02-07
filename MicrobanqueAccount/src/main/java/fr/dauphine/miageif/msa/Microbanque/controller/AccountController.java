@@ -59,7 +59,7 @@ public class AccountController {
         return account;
     }
 
-    @PutMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     @ResponseBody
     public String updateAccount(@ModelAttribute("form") Account account) {
 
@@ -86,11 +86,12 @@ public class AccountController {
         return ibanList;
     }
 
+    @ResponseBody
     @PostMapping("/account/add")
-    public String addAccount(@ModelAttribute("form") Account account, Model model) {
+    public String addAccount(@ModelAttribute("form") Account account) {
         repository.save(account);
 
-        return "index";
+        return "Compte créé avec succès";
     }
 
     @ResponseBody

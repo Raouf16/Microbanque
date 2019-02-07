@@ -19,7 +19,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
 							<h1 id="title">Service : Account</h1>
-							<p>Home page</p>
+							<p>Account view by ID</p>
 						</div>
 
 					<!-- Nav -->
@@ -92,7 +92,7 @@
 
 							<p>Please fill all the informations.</p>
 
-							<form method="GET" action="http://localhost:8012/account/add">
+							<form method="POST" action="http://localhost:8012/account/add">
 								<div class="row">
 									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
 									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
@@ -138,7 +138,7 @@
 
 							<p>Please fill all the informations.</p>
 
-							<form method="GET" action="http://localhost:8012/update">
+							<form method="POST" action="http://localhost:8012/update">
 								<div class="row">
 									<div class="col-6 col-12-mobile"><input type="text" name="id" placeholder="Numéro de compte" /></div>
 									<div class="col-6 col-12-mobile"><input type="text" name="iban" placeholder="IBAN du compte" /></div>
